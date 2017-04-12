@@ -1,13 +1,4 @@
 [
-    {
-        "keys": ["super+k", "super+r"],
-        "command": "find_results_buffer_utils",
-        "args": {"operation": "focus"}
-    },
-
-    {
-        "keys": ["super+k", "super+shift+r"],
-        "command": "find_results_buffer_utils",
-        "args": {"operation": "close"}
-    }
+    { "keys": ["super+k", "super+r"], "command": "find_results_buffer_focus" },
+    { "keys": ["super+k", "super+shift+r"], "command": "find_results_buffer_close" }
 ]
