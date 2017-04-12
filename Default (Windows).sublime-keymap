@@ -1,0 +1,13 @@
+[
+    {
+        "keys": ["ctrl+k", "ctrl+r"],
+        "command": "find_results_buffer_utils",
+        "args": {"operation": "focus"}
+    },
+
+    {
+        "keys": ["ctrl+k", "ctrl+shift+r"],
+        "command": "find_results_buffer_utils",
+        "args": {"operation": "close"}
+    }
+]
