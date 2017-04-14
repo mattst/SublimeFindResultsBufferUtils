@@ -1,7 +1,7 @@
 
 # Sublime Text plugins to focus and close the Find Results buffer.
 #
-# Author:    mattst - https://github.com/mattst/ - 2017-04-12
+# Author:    mattst - https://github.com/mattst/
 # Requires:  Sublime Text version 2 or 3
 # Commands:  "find_results_buffer_focus", "find_results_buffer_close"
 
@@ -9,7 +9,6 @@ import sublime, sublime_plugin
 
 SUBLIME_TEXT_VERSION      = int(sublime.version())
 VIEW_CLOSE_ADDED_VERSION  = 3024
-
 FIND_BUFFER_NAME          = "Find Results"
 MSG_FIND_BUFFER_CLOSED    = "Closed the Find Results buffer"
 MSG_FIND_BUFFER_FOCUSED   = "Focused the Find Results buffer"
@@ -65,13 +64,11 @@ class FindResultsBufferCloseCommand(FindResultsBuffer,
         if not find_buffer:
             return
 
-        # Ensure that the active buffer keeps the focus. This
-        # will not happen automatically if the Find Results
-        # buffer is in a different group to the active buffer
-        # or if it is necessary to call run_command("close").
+        # Even if view.close() is used there are still some
+        # circumstances when the focus is not auto-restored.
 
         active_buffer = self.window.active_view()
-        find_buffer_focused = find_buffer.id() == active_buffer.id()
+        restore_focus = active_buffer.id() != find_buffer.id()
 
         if SUBLIME_TEXT_VERSION >= VIEW_CLOSE_ADDED_VERSION:
             find_buffer.close()
@@ -79,7 +76,7 @@ class FindResultsBufferCloseCommand(FindResultsBuffer,
             self.window.focus_view(find_buffer)
             self.window.run_command("close")
 
-        if not find_buffer_focused:
+        if restore_focus:
             self.window.focus_view(active_buffer)
 
         sublime.status_message(MSG_FIND_BUFFER_CLOSED)
