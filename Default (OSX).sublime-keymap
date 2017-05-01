@@ -1,4 +1,13 @@
+// See README.md for details about context handling.
 [
-    { "keys": ["super+k", "super+r"], "command": "find_results_buffer_focus" },
-    { "keys": ["super+k", "super+shift+r"], "command": "find_results_buffer_close" }
+    {
+        "keys": ["super+k", "super+f4"],
+        "command": "find_results_buffer",
+        "args": {"action": "focus"}
+    },
+    {
+        "keys": ["super+k", "super+shift+f4"],
+        "command": "find_results_buffer",
+        "args": {"action": "close"}
+    }
 ]
