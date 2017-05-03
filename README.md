@@ -1,9 +1,9 @@
 
-## Find Results Buffer Utils - Package for Sublime Text
+## FindResultsBufferUtils (Sublime Text Package)
 
 ### Overview
 
-*Find Results Buffer Utils* is a Sublime Text package which adds keys allowing users to switch focus to and to close the *Find Results* buffer. It should be noted that closing the buffer is performed without the active buffer losing focus and that both operations are preformed within the active window only.
+*FindResultsBufferUtils* is a Sublime Text package which adds keys allowing users to switch focus to and to close the *Find Results* buffer, and to jump to the first and last of the current results. It should be noted that closing the buffer is performed without the active buffer losing focus.
 
 While these are simple tasks, which do not take much time, I have found the plugin so useful that it has become an integral part of how I use Sublime's powerful *Find in Files (Use Buffer)* feature.
 
@@ -13,7 +13,7 @@ Sublime Text version 2 or 3.
 
 ### Installing
 
-Use *Package Control*:
+Use [*Package Control*](https://packagecontrol.io/):
 
 - Open the command palette and select: Package Control: Install Package
 - Wait for the package list to be updated and then select: FindResultsBufferUtils
@@ -23,42 +23,29 @@ Of course users can, if they prefer, download the `zip` file and [install it man
 
 ### Key Bindings
 
-Since `F4` is used for the *Find Results* buffer's *Next/Previous* keys it makes sense to use the same key for focusing and closing it.
+The default key bindings will only be activated if the *Find Results* buffer is currently open.
+
+Since `F4` is used for the *Find Results* buffer's show *Next/Previous* result keys, the same keys, prefixed by `ctrl+k`, are used to show the *First/Last* result. Likewise variations of the `F` key are used to switch focus to, and to close, the *Find Results* buffer due to its use in initiating the find.
 
 Linux / Windows:
 
-- Focus the *Find Results* buffer: `ctrl+k, ctrl+f4`
-- Close the *Find Results* buffer: `ctrl+k, ctrl+shift+f4`
+- Focus the *Find Results* buffer: `ctrl+k, ctrl+f`
+- Close the *Find Results* buffer: `ctrl+k, ctrl+shift+f`
+- Show the first result: `ctrl+k, f4`
+- Show the last result: `ctrl+k, shift+f4`
 
 OSX:
 
-- Focus the *Find Results* buffer: `super+k, super+f4`
-- Close the *Find Results* buffer: `super+k, super+shift+f4`
+- Focus the *Find Results* buffer: `super+k, super+f`
+- Close the *Find Results* buffer: `super+k, super+shift+f`
+- Show the first result: `super+k, f4`
+- Show the last result: `super+k, shift+f4`
 
 Context Handling:
 
-Although not used by the default key bindings, this package does implement context handling should users wish to create context aware key bindings.
+The default key bindings will only be activated if the *Find Results* buffer is currently open. If users prefer to make them active all the time, ignoring the *Find Results* buffer's status, then simply remove the `"context": [{"key": "is_find_results_buffer_open"}]` line from each of the key bindings. See the always useful [PackageResourceViewer](https://packagecontrol.io/packages/PackageResourceViewer) plugin.
 
 The context key `is_find_results_buffer_open` simply checks whether there is a *Find Results* buffer open in the active window or not. The `operator` can be set to either `equal` or `not_equal` and the `operand` to `true/false`.
-
-For example, the following key bindings will only activate the plugin if there is a *Find Results* buffer open in the active window.
-
-    [
-        {
-            "keys": ["ctrl+???"],
-            "command": "find_results_buffer",
-            "args": {"action": "focus"},
-            "context": [{"key": "is_find_results_buffer_open",
-                         "operator": "equal", "operand": true}]
-        },
-        {
-            "keys": ["ctrl+shift+???"],
-            "command": "find_results_buffer",
-            "args": {"action": "close"},
-            "context": [{"key": "is_find_results_buffer_open",
-                         "operator": "equal", "operand": true}]
-        }
-    ]
 
 ### License
 

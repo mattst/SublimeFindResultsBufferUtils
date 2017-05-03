@@ -1,20 +1,33 @@
 [
     {
-        "keys": ["ctrl+k", "ctrl+f4"],
-        "command": "find_results_buffer",
-        "args": {"action": "focus"}
+        "keys": ["ctrl+k", "ctrl+f"],
+        "command": "find_results_buffer_utils",
+        "args": {"action": "focus_buffer"},
+        "context": [{"key": "is_find_results_buffer_open"}]
     },
     {
-        "keys": ["ctrl+k", "ctrl+shift+f4"],
-        "command": "find_results_buffer",
-        "args": {"action": "close"}
+        "keys": ["ctrl+k", "ctrl+shift+f"],
+        "command": "find_results_buffer_utils",
+        "args": {"action": "close_buffer"},
+        "context": [{"key": "is_find_results_buffer_open"}]
+    },
+    {
+        "keys": ["ctrl+k", "f4"],
+        "command": "find_results_buffer_utils",
+        "args": {"action": "show_first_result"},
+        "context": [{"key": "is_find_results_buffer_open"}]
+    },
+    {
+        "keys": ["ctrl+k", "shift+f4"],
+        "command": "find_results_buffer_utils",
+        "args": {"action": "show_last_result"},
+        "context": [{"key": "is_find_results_buffer_open"}]
     }
 ]
 
 // Context Handling Essentials (see README.md for more details).
-//
-// Key: is_find_results_buffer_open
-// Operator: equal or not_equal
-// Operand: true or false
-//
 // Key checks the active window for an open Find Results buffer.
+//
+// Key:      is_find_results_buffer_open
+// Operator: equal or not_equal (default: equal)
+// Operand:  true or false (default: true)
