@@ -13,17 +13,17 @@ Sublime Text version 2 or 3.
 
 ### Installing
 
-Use [*Package Control*](https://packagecontrol.io/):
+Use [Package Control](https://packagecontrol.io/):
 
-- Open the command palette and select: Package Control: Install Package
-- Wait for the package list to be updated and then select: FindResultsBufferUtils
-- Note: Submitted but awaiting addition
+- Open the command palette and select: `Package Control: Install Package`
+- Wait for the package list to be updated and then select: `FindResultsBufferUtils`
+- Note: Package submitted, awaiting addition
 
-Of course users can, if they prefer, download the `zip` file and [install it manually](http://docs.sublimetext.info/en/latest/extensibility/packages.html). There are no naming restrictions beyond the `.sublime-package` file extension but `FindResultsBufferUtils.sublime-package` would be a sensible choice.
+Of course users can, if they prefer, download the [zip file](https://github.com/mattst/SublimeFindResultsBufferUtils/archive/master.zip) and then [install it manually](http://docs.sublimetext.info/en/latest/extensibility/packages.html). There are no package file naming restrictions beyond the `.sublime-package` file extension but `FindResultsBufferUtils.sublime-package` would be a sensible choice.
 
 ### Key Bindings
 
-The default key bindings will only be activated if the *Find Results* buffer is currently open (see: *Context Handling* below).
+The default key bindings are only triggered when a *Find Results* buffer is open (see: *Context Handling* below).
 
 Since `F4` is used for the *Find Results* buffer's show *Next/Previous* result keys, the same keys, prefixed by `ctrl+k`, are used to show the *First/Last* result. Likewise, due to the `F` key's use in initiating *Find in Files*, the same key is used to switch focus to, and to close, the *Find Results* buffer.
 
@@ -43,9 +43,9 @@ OSX:
 
 Context Handling:
 
-The default key bindings will only be activated if the *Find Results* buffer is currently open. If users prefer to make them active all the time, ignoring the *Find Results* buffer's status, then simply remove the `"context": [{"key": "is_find_results_buffer_open"}]` line from each of the key bindings. See the always useful [PackageResourceViewer](https://packagecontrol.io/packages/PackageResourceViewer) plugin.
-
 The context key `is_find_results_buffer_open` simply checks whether there is a *Find Results* buffer open in the active window or not. The `operator` can be set to either `equal` or `not_equal` and the `operand` to `true/false`.
+
+The default key bindings are only triggered when a *Find Results* buffer is open. If users prefer to make them active all the time, ignoring the *Find Results* buffer's status, then simply remove the `"context": [{"key": "is_find_results_buffer_open"}]` line from each of the key bindings. See the always useful [PackageResourceViewer](https://packagecontrol.io/packages/PackageResourceViewer) plugin.
 
 ### License
 
