@@ -23,9 +23,9 @@ Of course users can, if they prefer, download the `zip` file and [install it man
 
 ### Key Bindings
 
-The default key bindings will only be activated if the *Find Results* buffer is currently open.
+The default key bindings will only be activated if the *Find Results* buffer is currently open (see: *Context Handling* below).
 
-Since `F4` is used for the *Find Results* buffer's show *Next/Previous* result keys, the same keys, prefixed by `ctrl+k`, are used to show the *First/Last* result. Likewise variations of the `F` key are used to switch focus to, and to close, the *Find Results* buffer due to its use in initiating the find.
+Since `F4` is used for the *Find Results* buffer's show *Next/Previous* result keys, the same keys, prefixed by `ctrl+k`, are used to show the *First/Last* result. Likewise, due to the `F` key's use in initiating *Find in Files*, the same key is used to switch focus to, and to close, the *Find Results* buffer.
 
 Linux / Windows:
 
