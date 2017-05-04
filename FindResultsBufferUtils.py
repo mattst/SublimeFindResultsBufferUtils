@@ -21,6 +21,19 @@ MSG_BUFFER_NOT_OPEN      = "The Find Results buffer is not open"
 MSG_BUFFER_CLOSED        = "Closed the Find Results buffer"
 
 
+def get_find_results_buffer():
+    """
+    Returns the View object of the Find Results buffer or None.
+    This function gets called from both of the plugin's classes.
+    """
+
+    for view in sublime.active_window().views():
+        if view.name() == FIND_RESULTS_BUFFER_NAME:
+            return view
+
+    return None
+
+
 class FindResultsBufferUtilsCommand(sublime_plugin.WindowCommand):
     """
     A Sublime Text plugin to focus or close the Find Results buffer, and
@@ -30,8 +43,8 @@ class FindResultsBufferUtilsCommand(sublime_plugin.WindowCommand):
     def run(self, action):
         """ Called by Sublime Text when the plugin is run. """
 
+        results_buffer = get_find_results_buffer()
         active_buffer = self.window.active_view()
-        results_buffer = self.get_results_buffer()
 
         if not results_buffer:
             sublime.status_message(MSG_BUFFER_NOT_OPEN)
@@ -47,16 +60,6 @@ class FindResultsBufferUtilsCommand(sublime_plugin.WindowCommand):
 
         elif action == ACTION_SHOW_LAST_RESULT:
             self.show_last_result(results_buffer)
-
-
-    def get_results_buffer(self):
-        """ Returns the View object of the Find Results buffer or None. """
-
-        for view in self.window.views():
-            if view.name() == FIND_RESULTS_BUFFER_NAME:
-                return view
-
-        return None
 
 
     def focus_buffer(self, results_buffer, active_buffer):
@@ -96,9 +99,6 @@ class FindResultsBufferUtilsCommand(sublime_plugin.WindowCommand):
     def show_first_result(self, results_buffer):
         """ Shows the first result from the Find Results buffer. """
 
-        # Do not show a status message because ST does not and
-        # it would overwrite the ST "No more results" message.
-
         move_to_args = {"to": "bof", "extend": False}
         results_buffer.run_command("move_to", move_to_args)
         self.window.run_command("next_result")
@@ -107,16 +107,13 @@ class FindResultsBufferUtilsCommand(sublime_plugin.WindowCommand):
     def show_last_result(self, results_buffer):
         """ Shows the last result from the Find Results buffer. """
 
-        # Do not show a status message because ST does not and
-        # it would overwrite the ST "No more results" message.
-
         move_to_args = {"to": "eof", "extend": False}
         results_buffer.run_command("move_to", move_to_args)
         self.window.run_command("prev_result")
 
 
-class iOpenerEventListener(sublime_plugin.EventListener):
-    """ A class to listen for events triggered by ST. """
+class FindResultsBufferUtilsListener(sublime_plugin.EventListener):
+    """ A class to listen for Sublime Text events. """
 
     def on_query_context(self, view, key, operator, operand, match_all):
         """
@@ -128,16 +125,11 @@ class iOpenerEventListener(sublime_plugin.EventListener):
 
         if key == FIND_RESULTS_CONTEXT_KEY:
 
-            is_find_results_buffer_open = False
-
-            for view in sublime.active_window().views():
-                if view.name() == FIND_RESULTS_BUFFER_NAME:
-                    is_find_results_buffer_open = True
-                    break
+            is_results_buffer_open = get_find_results_buffer() != None
 
             if operator == sublime.OP_EQUAL:
-                return is_find_results_buffer_open == operand
+                return is_results_buffer_open == operand
             elif operator == sublime.OP_NOT_EQUAL:
-                return is_find_results_buffer_open != operand
+                return is_results_buffer_open != operand
 
         return None

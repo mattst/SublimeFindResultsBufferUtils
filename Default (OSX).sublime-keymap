@@ -25,9 +25,8 @@
     }
 ]
 
-// Context Handling Essentials (see README.md for more details).
+// Context Handling Essentials (see README.md for more details):
 // Key checks the active window for an open Find Results buffer.
-//
 // Key:      is_find_results_buffer_open
 // Operator: equal or not_equal (default: equal)
 // Operand:  true or false (default: true)
