@@ -7,10 +7,9 @@
 # ST Command:   find_results_buffer_utils
 # Context Key:  is_find_results_buffer_open
 
-import sublime, sublime_plugin
+import sublime
+import sublime_plugin
 
-SUBLIME_TEXT_VERSION     = int(sublime.version())
-VIEW_CLOSE_ADDED_VERSION = 3024
 FIND_RESULTS_BUFFER_NAME = "Find Results"
 FIND_RESULTS_CONTEXT_KEY = "is_find_results_buffer_open"
 ACTION_FOCUS_BUFFER      = "focus_buffer"
@@ -19,6 +18,8 @@ ACTION_SHOW_FIRST_RESULT = "show_first_result"
 ACTION_SHOW_LAST_RESULT  = "show_last_result"
 MSG_BUFFER_NOT_OPEN      = "The Find Results buffer is not open"
 MSG_BUFFER_CLOSED        = "Closed the Find Results buffer"
+# Version 3024 added the close() method to close buffers.
+IS_VIEW_CLOSE_CALLABLE   = int(sublime.version()) >= 3024
 
 
 def get_find_results_buffer():
@@ -46,6 +47,7 @@ class FindResultsBufferUtilsCommand(sublime_plugin.WindowCommand):
         results_buffer = get_find_results_buffer()
         active_buffer = self.window.active_view()
 
+        # This will never happen with the default keys.
         if not results_buffer:
             sublime.status_message(MSG_BUFFER_NOT_OPEN)
 
@@ -65,50 +67,49 @@ class FindResultsBufferUtilsCommand(sublime_plugin.WindowCommand):
     def focus_buffer(self, results_buffer, active_buffer):
         """ Sets the focus to the Find Results buffer. """
 
-        already_focused = active_buffer.id() == results_buffer.id()
+        results_has_focus = results_buffer.id() == active_buffer.id()
 
-        if not already_focused:
+        if not results_has_focus:
             self.window.focus_view(results_buffer)
 
 
     def close_buffer(self, results_buffer, active_buffer):
         """ Closes the Find Results buffer. """
 
-        restore_focus = active_buffer.id() != results_buffer.id()
+        results_has_focus = results_buffer.id() == active_buffer.id()
 
-        if SUBLIME_TEXT_VERSION >= VIEW_CLOSE_ADDED_VERSION:
+        if IS_VIEW_CLOSE_CALLABLE:
             results_buffer.close()
         else:
-            self.window.focus_view(results_buffer)
+            if not results_has_focus:
+                self.window.focus_view(results_buffer)
             self.window.run_command("close")
 
         # Even if view.close() is used there are still some
         # circumstances when the focus is not auto-restored
-        # to the correct buffer, e.g. if the groups differ.
+        # to the active buffer, e.g. if the groups differ.
 
-        if restore_focus:
+        if not results_has_focus:
             self.window.focus_view(active_buffer)
-
-        # Show a status message to provide feedback in case
-        # the Find Results buffer is not visible (hidden in
-        # lots of tab bar tabs or the tab bar toggled off).
-
-        sublime.status_message(MSG_BUFFER_CLOSED)
+            # Show a status message to provide feedback in case
+            # the Find Results buffer was not visible (hidden in
+            # lots of tab bar tabs, Distraction Free mode, etc.).
+            sublime.status_message(MSG_BUFFER_CLOSED)
 
 
     def show_first_result(self, results_buffer):
         """ Shows the first result from the Find Results buffer. """
 
-        move_to_args = {"to": "bof", "extend": False}
-        results_buffer.run_command("move_to", move_to_args)
+        move_to_bof = {"to": "bof", "extend": False}
+        results_buffer.run_command("move_to", move_to_bof)
         self.window.run_command("next_result")
 
 
     def show_last_result(self, results_buffer):
         """ Shows the last result from the Find Results buffer. """
 
-        move_to_args = {"to": "eof", "extend": False}
-        results_buffer.run_command("move_to", move_to_args)
+        move_to_eof = {"to": "eof", "extend": False}
+        results_buffer.run_command("move_to", move_to_eof)
         self.window.run_command("prev_result")
 
 
@@ -125,7 +126,7 @@ class FindResultsBufferUtilsListener(sublime_plugin.EventListener):
 
         if key == FIND_RESULTS_CONTEXT_KEY:
 
-            is_results_buffer_open = get_find_results_buffer() != None
+            is_results_buffer_open = get_find_results_buffer() is not None
 
             if operator == sublime.OP_EQUAL:
                 return is_results_buffer_open == operand
