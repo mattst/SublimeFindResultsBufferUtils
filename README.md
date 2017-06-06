@@ -1,9 +1,9 @@
 
-## FindResultsBufferUtils (Sublime Text Package)
+## Find Results Buffer Utils (Sublime Text Package)
 
 ### Overview
 
-*FindResultsBufferUtils* is a Sublime Text package which adds keys allowing users to switch focus to and to close the *Find Results* buffer, and to jump to the first and last of the current results. It should be noted that closing the buffer is performed without the active buffer losing focus.
+*Find Results Buffer Utils* is a Sublime Text package which adds keys allowing users to switch focus to and to close the *Find Results* buffer, and to jump to the first and last of the current results. It should be noted that closing the buffer is performed without the active buffer losing focus.
 
 While these are simple tasks, which do not take much time, I have found the plugin so useful that it has become an integral part of how I use Sublime's powerful *Find in Files (Use Buffer)* feature.
 
@@ -18,7 +18,7 @@ Use [Package Control](https://packagecontrol.io/):
 - Open the command palette and select: `Package Control: Install Package`
 - Wait for the package list to be updated and then select: `FindResultsBufferUtils`
 
-Of course users can, if they prefer, download the [zip file](https://github.com/mattst/SublimeFindResultsBufferUtils/archive/master.zip) and then [install it manually](http://docs.sublimetext.info/en/latest/extensibility/packages.html). There are no package file naming restrictions beyond the `.sublime-package` file extension but `FindResultsBufferUtils.sublime-package` would be a sensible choice.
+Users can, if they prefer, download the [zip file](https://github.com/mattst/SublimeFindResultsBufferUtils/archive/master.zip) and then [install it manually](http://docs.sublimetext.info/en/latest/extensibility/packages.html); `FindResultsBufferUtils.sublime-package` should be used as the installed package file name or, if unzipping for folder installation, then `FindResultsBufferUtils` should be used as the folder name.
 
 ### Key Bindings
 
