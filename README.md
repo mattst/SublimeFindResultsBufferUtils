@@ -17,7 +17,6 @@ Use [Package Control](https://packagecontrol.io/):
 
 - Open the command palette and select: `Package Control: Install Package`
 - Wait for the package list to be updated and then select: `FindResultsBufferUtils`
-- Note: Package submitted, awaiting addition
 
 Of course users can, if they prefer, download the [zip file](https://github.com/mattst/SublimeFindResultsBufferUtils/archive/master.zip) and then [install it manually](http://docs.sublimetext.info/en/latest/extensibility/packages.html). There are no package file naming restrictions beyond the `.sublime-package` file extension but `FindResultsBufferUtils.sublime-package` would be a sensible choice.
 
